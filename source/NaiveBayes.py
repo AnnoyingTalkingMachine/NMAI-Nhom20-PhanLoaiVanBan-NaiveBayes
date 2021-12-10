@@ -1,3 +1,5 @@
+import pickle
+
 class NaiBay():
     def __init__(self):
         # List các từ phân biệt trong tất cả các câu
@@ -31,10 +33,13 @@ class NaiBay():
         # Value: {subKey: các nhãn phân biệt, subValue: tần xuất từ này trong nhãn đó}
         # -> P( word | label )
         self.probWordByLabel = {}
+    # end __init__()
 
     # Đưa dữ liệu train vào các biến thuộc tính (bên trên)
-    def pre_train(self, data):
-        for line, label in data:
+    def pre_train(self, train_data):
+        print("Pre-train")
+
+        for line, label in train_data:
             self.labels.append(label)
 
             if label in self.distinctLabels:
@@ -49,7 +54,7 @@ class NaiBay():
                     self.distinctWords.append(word)
                     self.countDistinctWords += 1
 
-        for line, label in data:
+        for line, label in train_data:
             self.countWordInLine.append([0] * self.countDistinctWords)
             for word in line:
                 idx = self.distinctWords.index(word)
@@ -66,16 +71,23 @@ class NaiBay():
                     self.countWordByLabel[word][label] = line[word]
     # end pre_train()
 
-    # Tính self.prob
-    def train(self, train_data):
+    # Tính self.probWordByLabel
+    def train(self, train_data):   
         self.pre_train(train_data)
 
+        print("Train")
+        
         for word in self.distinctWords:
             self.probWordByLabel[word] = {}
+
             for label in self.countWordByLabel[word]:
                 numerator = self.countWordByLabel[word][label] + 1
                 denominator = self.countAllWordByLabel[label] + self.countDistinctWords
+
                 self.probWordByLabel[word][label] = numerator / denominator
+
+        with open('.\\..\\data\\processed\\after_train.pickle', 'wb') as after_train:
+            pickle.dump(self.probWordByLabel, after_train)
     # end train()
 
     def classify(self, sentence):
@@ -95,10 +107,13 @@ class NaiBay():
         # print(self.countWordInLine)
         # print(self.countAllWordByLabel)
         # print(self.countWordByLabel)
+
         for word in self.probWordByLabel:
-            print(word)
             for label in self.probWordByLabel[word]:
-                print(label, ": ", self.probWordByLabel[word][label])
+                print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))
+
+
+
 
     
 

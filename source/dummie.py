@@ -3,10 +3,7 @@ import pickle
 handle_w = open('filename.pickle', 'wb')
 
 a = {'hello': 'world'}
-pickle.dump(a, handle_w, protocol=pickle.HIGHEST_PROTOCOL)
-
-b = {'hello': 'you'}
-pickle.dump(b, handle_w, protocol=pickle.HIGHEST_PROTOCOL)
+pickle.dump(a, handle_w)
 
 handle_w.close()
 

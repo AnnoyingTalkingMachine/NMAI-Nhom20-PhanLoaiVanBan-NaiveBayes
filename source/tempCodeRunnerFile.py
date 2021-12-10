@@ -1,2 +1,2 @@
-ou'}
-pickle.dump(b, handle_
+b = {'hello': 'you'}
+# pickle.dump(b, handle_w, protocol=pickle.HIGHEST_PROTOCOL)
