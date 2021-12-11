@@ -137,17 +137,19 @@ class NaiBay():
 
 
     def printThings(self):
-        print(self.distinctWords)
-        print(self.labels)
-        print(self.distinctLabels)
-        print(self.countWordInLine)
-        print(self.countAllWordByLabel)
-        print(self.countWordByLabel)
+        print("Print things")
+        # print(self.distinctWords)
+        # print(self.labels)
+        # print(self.distinctLabels)
+        # print(self.countWordInLine)
+        # print(self.countAllWordByLabel)
+        # print(self.countWordByLabel)
 
-        # probWordByLabel
-        for word in self.probWordByLabel:
-            for label in self.probWordByLabel[word]:
-                print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))
+        # print(self.probWordByLabel)
+        # # probWordByLabel
+        # for word in self.probWordByLabel:
+        #     for label in self.probWordByLabel[word]:
+        #         print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))
     # end printThing()
 
     def loadPickleSelf(self):

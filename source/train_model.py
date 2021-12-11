@@ -10,4 +10,3 @@ nbc = NaiBay()
 nbc.train(train_data)
 nbc.printThings()
 
-
