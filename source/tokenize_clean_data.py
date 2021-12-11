@@ -71,3 +71,21 @@ def clean_tokens(tweet_tokens):
                 cleaned_tokens.append(token)
 
     return cleaned_tokens
+
+def list_to_dict_tokens(cleaned_tokens):
+        newDict = dict()
+
+        for token in cleaned_tokens:
+            if token in newDict:
+                newDict[token] += 1
+            else:
+                newDict[token] = 1
+
+        return newDict
+
+# Token hoá và làm sạch câu
+from nltk.tokenize import TweetTokenizer
+
+def tokenize_clean_sentence(sentence):
+    tokens = TweetTokenizer(reduce_len=True).tokenize(sentence)
+    return list_to_dict_tokens(clean_tokens(tokens))

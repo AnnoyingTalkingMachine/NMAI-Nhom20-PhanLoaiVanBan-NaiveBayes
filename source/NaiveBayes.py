@@ -1,4 +1,4 @@
-import pickle
+from utility import *
 
 class NaiBay():
     def __init__(self):
@@ -35,25 +35,32 @@ class NaiBay():
         self.probWordByLabel = {}
     # end __init__()
 
-    # Đưa dữ liệu train vào các biến thuộc tính (bên trên)
-    def pre_train(self, train_data):
-        print("Pre-train")
+
+    ###################
+    ##     TRAIN     ##
+    ###################
+    def train(self, train_data):
+        print("Train")
 
         for line, label in train_data:
+            # Ghi lại toàn bộ label theo thứ tự xuất hiện trong tập train
             self.labels.append(label)
 
+            # Ghi lại key: label phân biệt, value: số lần xuất hiện 
             if label in self.distinctLabels:
                 self.distinctLabels[label] += 1
             else:
                 self.distinctLabels[label] = 1
                 self.countAllWordByLabel[label] = 0
 
+            # Ghi lại các từ phân biệt
             for word in line:
                 self.countWords += line[word]
                 if word not in self.distinctWords:
                     self.distinctWords.append(word)
                     self.countDistinctWords += 1
 
+        # Lập ma trận
         for line, label in train_data:
             self.countWordInLine.append([0] * self.countDistinctWords)
             for word in line:
@@ -69,14 +76,8 @@ class NaiBay():
                 else:
                     self.countWordByLabel[word] = {}
                     self.countWordByLabel[word][label] = line[word]
-    # end pre_train()
 
-    # Tính self.probWordByLabel
-    def train(self, train_data):   
-        self.pre_train(train_data)
-
-        print("Train")
-        
+        # Tính self.probWordByLabel
         for word in self.distinctWords:
             self.probWordByLabel[word] = {}
 
@@ -85,37 +86,75 @@ class NaiBay():
                 denominator = self.countAllWordByLabel[label] + self.countDistinctWords
 
                 self.probWordByLabel[word][label] = numerator / denominator
-
-        with open('.\\..\\data\\processed\\after_train.pickle', 'wb') as after_train:
-            pickle.dump(self.probWordByLabel, after_train)
+        
+        # Lưu lại model đã train
+        self.dumpPickleSelf()
     # end train()
 
-    def classify(self, sentence):
+
+    ##################
+    ##   CLASSIFY   ##
+    ##################
+    def classify(self, tokenized_sentence):
         print("Classify")
+
+        probLabel = {}
+        for label in self.distinctLabels:
+            probLabel[label] = 1
+
+        for word in tokenized_sentence:
+            if word not in self.probWordByLabel: 
+                continue
+            
+            for label in self.distinctLabels:
+                if label in self.probWordByLabel[word]:
+                    temp = self.probWordByLabel[word][label] ** tokenized_sentence[word]
+                    probLabel[label] *= temp
+                    print(word, label, temp)
+
+        for label in self.distinctLabels:
+            if probLabel[label] == 1:
+                probLabel[label] = 0
+
+            temp = self.distinctLabels[label] / len(self.labels)
+            probLabel[label] *= temp
+            print(label, temp)
+
+        print('Label: ', probLabel)
+        return max(probLabel, key=probLabel.get)
     # end classify()               
                 
 
-    def test(test_data):
+    ##################
+    ##     TEST     ##
+    ##################
+    def test(self, test_data):
         print("Test data")
+
+        confusionMatrix = {}
+        
     # end test()
 
 
     def printThings(self):
-        # print(self.distinctWords)
-        # print(self.labels)
-        # print(self.distinctLabels)
-        # print(self.countWordInLine)
-        # print(self.countAllWordByLabel)
-        # print(self.countWordByLabel)
+        print(self.distinctWords)
+        print(self.labels)
+        print(self.distinctLabels)
+        print(self.countWordInLine)
+        print(self.countAllWordByLabel)
+        print(self.countWordByLabel)
 
+        # probWordByLabel
         for word in self.probWordByLabel:
             for label in self.probWordByLabel[word]:
                 print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))
+    # end printThing()
 
+    def loadPickleSelf(self):
+        self.__dict__.update(loadPickle('after_train.pickle'))
 
-
-
-    
+    def dumpPickleSelf(self):
+        dumpPickle(self.__dict__, 'after_train.pickle')
 
             
 

@@ -1,0 +1,16 @@
+[ label, time, date, query, username, text ]
+-> "0","1467810917","Mon Apr 06 22:19:53 PDT 2009","NO_QUERY","longtruong","I work. He works. They work. We give up!"
+
+[ (text, label) ]
+-> "I work. He works. They work. We give up!", 0
+
+[ ([token], label) ]
+-> ("I", "work", ".", "He", "works", ".", "They", "work", ".", "We", "give", "up", "!"), "0"
+
+[ ([cleaned_token], label) ]
+-> ("work", "work", "work", "give", "up"), 0
+
+[ ({cleaned_token: time_repeated}, label) ]
+-> {"work": 3, "give": 1, "up": 1}, 0
+
+=> Đưa vào NaiBay

@@ -1,14 +1,13 @@
 # Đọc tập train
-import pickle
+from utility import *
 
-with open('.\\..\\data\\processed\\before_train.pickle', 'rb') as for_train:
-    train_data = pickle.load(for_train)
-
+train_data = loadPickle('before_train.pickle')
 
 # Train
-print("start NaiBay")
 from NaiveBayes import NaiBay
 
-classifier = NaiBay()
-classifier.train(train_data)
-classifier.printThings()
+nbc = NaiBay()
+nbc.train(train_data)
+nbc.printThings()
+
+
