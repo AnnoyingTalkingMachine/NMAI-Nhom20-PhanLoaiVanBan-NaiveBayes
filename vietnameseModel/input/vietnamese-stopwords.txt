@@ -1,5 +1,7 @@
 áo
 ao
+áo phông
+áo quần
 ảnh
 âm thanh
 bàn tay
@@ -9,8 +11,10 @@ bra
 bitis
 bụng
 cảm giác
+cúc
 chất
 chất lượng
+chat luong
 chân
 chủ
 chai
@@ -20,6 +24,7 @@ da
 dáng
 dây
 dép
+đt
 đoạn
 đặt
 đồ
@@ -27,10 +32,12 @@ dép
 đồng hồ
 đóng gói
 đường chỉ
+đùi
 gọi là
 gối
 giao
 giao hàng
+giá
 giá cả
 giấy
 giày
@@ -47,13 +54,20 @@ khách hàng
 kinh nghiệm
 len
 nắp
+nỉ
+niềm tin
 ngực
 nhưng
 nt
 nchung
 ncl
+nch
+nc
 m
+mk
+mh
 màu
+mầu
 may
 màu sắc
 màn hình
@@ -61,20 +75,26 @@ mạng
 mặc
 mẫu
 mình
+mn
 mua
 mùi
 mũ
 mông
 sao
+sale
 son
 sơ mi
 shop
+shops
+ship
+shipper
 shoppe
 size
 sản phẩm
 số lượng
 xl
 ren
+t
 tiền
 thế này
 túi
@@ -85,8 +105,10 @@ online
 phom
 phục vụ
 v
+vn
 vải
 váy
+vận chuyển
 video
 quần
 quan
@@ -858,7 +880,6 @@ mà thôi
 mà vẫn
 mình
 mạnh
-mất
 mất còn
 mọi
 mọi giờ
@@ -1856,7 +1877,6 @@ a
 điểm gặp
 điểm đầu tiên
 đành đạch
-đáng
 đáng kể
 đáng lí
 đáng lý
@@ -1977,7 +1997,6 @@ a
 ơi
 ơi là
 ư
-ạ
 ạ ơi
 ấy
 ấy là
