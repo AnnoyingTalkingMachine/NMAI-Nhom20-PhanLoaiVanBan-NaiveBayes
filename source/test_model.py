@@ -1,7 +1,16 @@
 # Đọc tập train
 import pickle
+from time import time
 
-with open('.\\..\\data\\processed\\after_train.pickle', 'rb') as after_train:
-    trained_data = pickle.load(after_train)
+with open('.\\..\\data\\processed\\test.pickle', 'rb') as test:
+    test_data = pickle.load(test)
 
-print(trained_data)
+from NaiveBayes import NaiBay
+nbc = NaiBay()
+nbc.loadPickleSelf()
+
+start_time = time()
+
+nbc.test(test_data)
+
+print('Test: ', time() - start_time)

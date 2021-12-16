@@ -12,7 +12,7 @@ class NaiBay():
         # Ma trận gồm nhiều dòng, mỗi dòng là 1 câu trong tập dữ liệu train
         # Mỗi cột trên một dòng sẽ là số lần xuất hiện của từ cụ thể trong câu
         # Thứ tự các từ đại diện các cột trùng thứ tự tring distinctWords 
-        self.countWordInLine = []
+        # self.countWordInLine = []
 
         # Danh sách các nhãn của các dòng (theo ma trận trên)
         self.labels = []
@@ -62,20 +62,20 @@ class NaiBay():
 
         # Lập ma trận
         for line, label in train_data:
-            self.countWordInLine.append([0] * self.countDistinctWords)
+            # self.countWordInLine.append([0] * self.countDistinctWords)
             for word in line:
-                idx = self.distinctWords.index(word)
-                self.countWordInLine[-1][idx] += line[word]
-                self.countAllWordByLabel[label] += line[word]
+                # idx = self.distinctWords.index(word)
+                # self.countWordInLine[-1][idx] += line[word]
+                self.countAllWordByLabel[label] += 1 # line[word]
                 
                 if word in self.countWordByLabel:
                     if label in self.countWordByLabel[word]:
-                        self.countWordByLabel[word][label] += line[word]
+                        self.countWordByLabel[word][label] += 1 # line[word]
                     else:
-                        self.countWordByLabel[word][label] = line[word]
+                        self.countWordByLabel[word][label] = 1 # line[word]
                 else:
                     self.countWordByLabel[word] = {}
-                    self.countWordByLabel[word][label] = line[word]
+                    self.countWordByLabel[word][label] = 1 # line[word]
 
         # Tính self.probWordByLabel
         for word in self.distinctWords:
@@ -96,7 +96,7 @@ class NaiBay():
     ##   CLASSIFY   ##
     ##################
     def classify(self, tokenized_sentence):
-        print("Classify")
+        # print("Classify")
 
         probLabel = {}
         for label in self.distinctLabels:
@@ -108,9 +108,9 @@ class NaiBay():
             
             for label in self.distinctLabels:
                 if label in self.probWordByLabel[word]:
-                    temp = self.probWordByLabel[word][label] ** tokenized_sentence[word]
+                    temp = self.probWordByLabel[word][label] # ** tokenized_sentence[word]
                     probLabel[label] *= temp
-                    print(word, label, temp)
+                    # print(word, label, temp)
 
         for label in self.distinctLabels:
             if probLabel[label] == 1:
@@ -118,11 +118,13 @@ class NaiBay():
 
             temp = self.distinctLabels[label] / len(self.labels)
             probLabel[label] *= temp
-            print(label, temp)
+            # print(label, temp)
 
-        print('Label: ', probLabel)
+        # print('Label: ', probLabel)
         return max(probLabel, key=probLabel.get)
-    # end classify()               
+    # end classify()
+
+
                 
 
     ##################
@@ -130,9 +132,29 @@ class NaiBay():
     ##################
     def test(self, test_data):
         print("Test data")
-
-        confusionMatrix = {}
         
+        confusionMatrix = {}
+        for label1 in self.distinctLabels:
+            confusionMatrix[label1] = {}
+            for label2 in self.distinctLabels:
+                confusionMatrix[label1][label2] = 0
+        
+        for tokenized_sentence, label in test_data:
+            pred_label = self.classify(tokenized_sentence)
+            confusionMatrix[label][pred_label] += 1
+
+        correct_pred = 0
+        incorrect_pred = 0
+        for label1 in confusionMatrix:
+            for label2 in confusionMatrix[label1]:
+                if label1 == label2:
+                    correct_pred += confusionMatrix[label1][label2]
+                else:
+                    incorrect_pred += confusionMatrix[label1][label2]
+        print("Accuracy: %f" % ( correct_pred / (correct_pred + incorrect_pred) ) )
+        
+        print(confusionMatrix)
+
     # end test()
 
 
