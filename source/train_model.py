@@ -1,16 +1,18 @@
 # Đọc tập train
-from utility import *
+import pickle
 from time import time
 
-train_data = loadPickle('before_train.pickle')
+pickleFile = open('.\\..\\data\\processed\\before_train.pickle', 'rb')
+train_data = pickle.load(pickleFile)
+pickleFile.close()
 
 # Train
 from NaiveBayes import NaiBay
 nbc = NaiBay()
 
 start_time = time()
-
 nbc.train(train_data)
-
 print('Train: ', time() - start_time)
+
+nbc.dumpPickleSelf("after_train.pickle")
 

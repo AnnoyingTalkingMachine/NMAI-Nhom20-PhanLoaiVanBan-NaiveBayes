@@ -7,10 +7,8 @@ with open('.\\..\\data\\processed\\test.pickle', 'rb') as test:
 
 from NaiveBayes import NaiBay
 nbc = NaiBay()
-nbc.loadPickleSelf()
+nbc.loadPickleSelf("after_train.pickle")
 
 start_time = time()
-
 nbc.test(test_data)
-
 print('Test: ', time() - start_time)

@@ -1,4 +1,4 @@
-from utility import *
+import pickle
 
 class NaiBay():
     def __init__(self):
@@ -86,9 +86,6 @@ class NaiBay():
                 denominator = self.countAllWordByLabel[label] + self.countDistinctWords
 
                 self.probWordByLabel[word][label] = numerator / denominator
-        
-        # Lưu lại model đã train
-        self.dumpPickleSelf()
     # end train()
 
 
@@ -174,11 +171,16 @@ class NaiBay():
         #         print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))
     # end printThing()
 
-    def loadPickleSelf(self):
-        self.__dict__.update(loadPickle('after_train.pickle'))
+    def loadPickleSelf(self, fileName):
+        pickleFile = open('.\\..\\data\\processed\\%s' % (fileName), 'rb')
+        data = pickle.load(pickleFile)
+        pickleFile.close()
+        self.__dict__.update(data)
 
-    def dumpPickleSelf(self):
-        dumpPickle(self.__dict__, 'after_train.pickle')
+    def dumpPickleSelf(self, fileName):
+        pickleFile = open('.\\..\\data\\processed\\%s' % (fileName), 'wb')
+        pickle.dump(self.__dict__, pickleFile)
+        pickleFile.close()
 
             
 

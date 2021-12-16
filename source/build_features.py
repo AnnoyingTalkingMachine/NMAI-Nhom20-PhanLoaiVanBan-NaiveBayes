@@ -1,7 +1,5 @@
 # Đọc dữ liệu raw
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 from time import time
 import random
 
@@ -56,11 +54,16 @@ test_data = data[trim_index:]
 print('Chia tập: ', time() - start_time)
 
 # Lưu lại các tập 
-from utility import dumpPickle
+import pickle
 
 start_time = time()
 
-dumpPickle(train_data, 'before_train.pickle')
-dumpPickle(test_data, 'test.pickle')
+pickleFile = open('.\\..\\data\\processed\\before_train.pickle', 'wb')
+pickle.dump(train_data, pickleFile)
+pickleFile.close()
+
+pickleFile = open('.\\..\\data\\processed\\test.pickle', 'wb')
+pickle.dump(test_data, pickleFile)
+pickleFile.close()
 
 print('Lưu dữ liệu: :', time() - start_time)
