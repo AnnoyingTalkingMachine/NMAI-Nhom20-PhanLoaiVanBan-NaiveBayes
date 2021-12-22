@@ -66,16 +66,16 @@ class NaiBay():
             for word in line:
                 # idx = self.distinctWords.index(word)
                 # self.countWordInLine[-1][idx] += line[word]
-                self.countAllWordByLabel[label] += 1 # line[word]
+                self.countAllWordByLabel[label] += line[word]
                 
                 if word in self.countWordByLabel:
                     if label in self.countWordByLabel[word]:
-                        self.countWordByLabel[word][label] += 1 # line[word]
+                        self.countWordByLabel[word][label] += line[word]
                     else:
-                        self.countWordByLabel[word][label] = 1 # line[word]
+                        self.countWordByLabel[word][label] = line[word]
                 else:
                     self.countWordByLabel[word] = {}
-                    self.countWordByLabel[word][label] = 1 # line[word]
+                    self.countWordByLabel[word][label] = line[word]
 
         # Tính self.probWordByLabel
         for word in self.distinctWords:
@@ -105,7 +105,7 @@ class NaiBay():
             
             for label in self.distinctLabels:
                 if label in self.probWordByLabel[word]:
-                    temp = self.probWordByLabel[word][label] # ** tokenized_sentence[word]
+                    temp = self.probWordByLabel[word][label] ** tokenized_sentence[word]
                     probLabel[label] *= temp
                     # print(word, label, temp)
 
@@ -115,7 +115,6 @@ class NaiBay():
 
             temp = self.distinctLabels[label] / len(self.labels)
             probLabel[label] *= temp
-            # print(label, temp)
 
         # print('Label: ', probLabel)
         return max(probLabel, key=probLabel.get)
@@ -159,7 +158,7 @@ class NaiBay():
         print("Print things")
         # print(self.distinctWords)
         # print(self.labels)
-        # print(self.distinctLabels)
+        print(self.distinctLabels)
         # print(self.countWordInLine)
         # print(self.countAllWordByLabel)
         # print(self.countWordByLabel)
