@@ -1,6 +1,0 @@
-https://github.com/linkpp/vietnamese-sentiment-analysis
-
-https://nguyenvanhieu.vn/phan-loai-van-ban-tieng-viet/
-
-dataset tiếng việt: https://www.kaggle.com/linhlpv/vietnamese-sentiment-analyst-base/data?select=data.csv
-

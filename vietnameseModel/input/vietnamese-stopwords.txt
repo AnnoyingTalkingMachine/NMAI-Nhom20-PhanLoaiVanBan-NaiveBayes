@@ -1,4 +1,5 @@
 áo
+a
 ao
 áo phông
 áo quần
@@ -33,6 +34,7 @@ dép
 đóng gói
 đường chỉ
 đùi
+e
 gọi là
 gối
 giao
@@ -89,9 +91,11 @@ shops
 ship
 shipper
 shoppe
+sz
 size
 sản phẩm
 số lượng
+sp
 xl
 ren
 t

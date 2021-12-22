@@ -82,11 +82,9 @@ def remove_redundant_character(document):
     document = re.sub("[0-9].kg", "", document) #remove cân nặng
     document = re.sub("[0-9].k", "", document) #remove giá tiền
     document = re.sub("[0-9]", "", document) #remove number
-    document = re.sub("nn*", "n", document) #rm nn
-    document = re.sub("gg*", "g", document) #rm gg
-    document = re.sub("uu*", "u", document) #rm uu
-    document = re.sub("pp*", "p", document) #rm pp
-
+    cha = ('a','b','c','d','e','f','g','h','i','k','l','m','n','o','p','q','u','z','r','s')
+    for i in cha:
+        document = re.sub(f"{i}{i}*",f"{i}",document)
     return document
 
 #chuyển hóa về dạng từ điển#
