@@ -1,4 +1,5 @@
 import pickle
+from plot_confusion_matrix import plot_confusion_matrix, to_df_confusion
 
 class NaiBay():
     def __init__(self):
@@ -15,7 +16,9 @@ class NaiBay():
         # self.countWordInLine = []
 
         # Danh sách các nhãn của các dòng (theo ma trận trên)
-        self.labels = []
+        # self.labels = []
+        # Tổng số nhãn (= tổng số dòng dữ liệu)
+        self.countLabels = 0
 
         # Key: các nhãn phân biệt
         # Value: số lượng của các nhãn trong tập dữ liệu train
@@ -44,7 +47,8 @@ class NaiBay():
 
         for line, label in train_data:
             # Ghi lại toàn bộ label theo thứ tự xuất hiện trong tập train
-            self.labels.append(label)
+            # self.labels.append(label)
+            self.countLabels += 1
 
             # Ghi lại key: label phân biệt, value: số lần xuất hiện 
             if label in self.distinctLabels:
@@ -113,7 +117,7 @@ class NaiBay():
             if probLabel[label] == 1:
                 probLabel[label] = 0
 
-            temp = self.distinctLabels[label] / len(self.labels)
+            temp = self.distinctLabels[label] / self.countLabels # len(self.labels)
             probLabel[label] *= temp
 
         # print('Label: ', probLabel)
@@ -129,42 +133,52 @@ class NaiBay():
     def test(self, test_data):
         print("Test data")
         
-        confusionMatrix = {}
-        for label1 in self.distinctLabels:
-            confusionMatrix[label1] = {}
-            for label2 in self.distinctLabels:
-                confusionMatrix[label1][label2] = 0
-        
-        for tokenized_sentence, label in test_data:
+        self.y_actu = []
+        self.y_pred = []
+
+        for tokenized_sentence, actu_label in test_data:
             pred_label = self.classify(tokenized_sentence)
-            confusionMatrix[label][pred_label] += 1
+            self.y_actu.append(actu_label)
+            self.y_pred.append(pred_label)
 
-        correct_pred = 0
-        incorrect_pred = 0
-        for label1 in confusionMatrix:
-            for label2 in confusionMatrix[label1]:
-                if label1 == label2:
-                    correct_pred += confusionMatrix[label1][label2]
-                else:
-                    incorrect_pred += confusionMatrix[label1][label2]
-        print("Accuracy: %f" % ( correct_pred / (correct_pred + incorrect_pred) ) )
+        plot_confusion_matrix(to_df_confusion(self.y_actu, self.y_pred))
+
+        # confusionMatrix = {}
+        # for label1 in self.distinctLabels:
+        #     confusionMatrix[label1] = {}
+        #     for label2 in self.distinctLabels:
+        #         confusionMatrix[label1][label2] = 0
         
-        print(confusionMatrix)
+        # for tokenized_sentence, actu_label in test_data:
+        #     pred_label = self.classify(tokenized_sentence)
+        #     confusionMatrix[actu_label][pred_label] += 1
 
+        # correct_pred = 0
+        # incorrect_pred = 0
+        # for label1 in confusionMatrix:
+        #     for label2 in confusionMatrix[label1]:
+        #         if label1 == label2:
+        #             correct_pred += confusionMatrix[label1][label2]
+        #         else:
+        #             incorrect_pred += confusionMatrix[label1][label2]
+        # print("Accuracy: %f" % ( correct_pred / (correct_pred + incorrect_pred) ) )
+        
+        # print(confusionMatrix)
+
+        #SKLEARN    
     # end test()
 
 
     def printThings(self):
         print("Print things")
-        # print(self.distinctWords)
-        # print(self.labels)
+        print(self.distinctWords)
         print(self.distinctLabels)
         # print(self.countWordInLine)
-        # print(self.countAllWordByLabel)
-        # print(self.countWordByLabel)
+        print(self.countAllWordByLabel)
+        print(self.countWordByLabel)
 
         # print(self.probWordByLabel)
-        # # probWordByLabel
+        # probWordByLabel
         # for word in self.probWordByLabel:
         #     for label in self.probWordByLabel[word]:
         #         print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))

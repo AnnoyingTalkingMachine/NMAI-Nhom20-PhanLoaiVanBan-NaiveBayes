@@ -8,7 +8,6 @@ dataFrame_raw.columns = ["label", "time", "date", "query", "username", "text"]
 
 dataFrame = dataFrame_raw[["label", "text"]]
 
-
 # Cắt nhỏ kích thước dữ liệu
 start_time = time()
 

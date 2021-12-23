@@ -12,7 +12,7 @@ nbc = NaiBay()
 
 start_time = time()
 nbc.train(train_data)
-print('Train: ', time() - start_time)
+print('Train time: ', time() - start_time)
 
 nbc.dumpPickleSelf("after_train.pickle")
 
