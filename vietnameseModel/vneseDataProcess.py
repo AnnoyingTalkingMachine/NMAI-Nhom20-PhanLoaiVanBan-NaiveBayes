@@ -38,12 +38,9 @@ def remove_html(txt):
 def clean_token(token):
     if(token == "k" or token == "ko" or token == "khong" or token == "kg"): return "không"
     if(token == "dc" or token == "đc"): return "được"
-    if(token == "sp"): return "sản_phẩm"
-    if(token == "e"): return "em"
-    if(token == 'a'): return "anh"
     if(token == "sz"): return "size"
     if(token == "siu"): return "siêu"
-    if(token == "cx"): return "cũng"
+    if(token == "cx" or token == "cug"): return "cũng"
     if(token == "bt"): return "bình_thường"
     if(token == "iu"): return "yêu"
     if(token == 'i'): return "y"
@@ -55,6 +52,8 @@ def clean_token(token):
     if(token == "loi"): return "lỗi"
     if(token == "hai long"): return "hài_lòng"
     if(token == "tot"): return "tốt"
+    if(token == "lam"): return "lắm"
+    if(token == "rat"): return "rất"
 
     return token
 
@@ -130,11 +129,7 @@ def text_preprocess(document):
     document = remove_stopwords(document)
 
     # đưa về dạng từ điển
-    document = document.split(' ')
-    document = list_to_dict_tokens(document)
+    # document = document.split(' ')
+    # document = list_to_dict_tokens(document)
     
     return document
-
-string1 = 'áo bao đẹp nè mn ạ haha'
-
-print(text_preprocess(string1))

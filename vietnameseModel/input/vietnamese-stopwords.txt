@@ -29,6 +29,7 @@ dép
 đoạn
 đặt
 đồ
+đôi
 đầm
 đồng hồ
 đóng gói
@@ -47,16 +48,19 @@ form
 hàng
 hàng hóa
 hình
+hình thức
 hộp
 họa tiết
 ib
 inbox
 kiểu
+kết quả
 khách hàng
 kinh nghiệm
 len
 nắp
 nỉ
+nhắn tin
 niềm tin
 ngực
 nhưng
@@ -65,6 +69,8 @@ nchung
 ncl
 nch
 nc
+ntn
+nút
 m
 mk
 mh
@@ -81,6 +87,7 @@ mn
 mua
 mùi
 mũ
+mô tả
 mông
 sao
 sale
@@ -99,12 +106,15 @@ sp
 xl
 ren
 t
+tất
 tiền
 thế này
+trả lời
 túi
 thời gian
 thị trường
 thông tin
+thiết kế
 online
 phom
 phục vụ
@@ -114,11 +124,14 @@ vải
 váy
 vận chuyển
 video
+vs
+voucher
 quần
 quan
 quần áo
 quần lót
 quảng cáo
+quà
 a lô
 a ha
 ai
