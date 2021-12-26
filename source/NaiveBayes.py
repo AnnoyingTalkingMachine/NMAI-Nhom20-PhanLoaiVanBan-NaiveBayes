@@ -1,5 +1,15 @@
 import pickle
-from plot_confusion_matrix import plot_confusion_matrix, to_df_confusion
+
+from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.datasets import load_breast_cancer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+import seaborn as sns
+sns.set_style('darkgrid') 
 
 class NaiBay():
     def __init__(self):
@@ -141,7 +151,25 @@ class NaiBay():
             self.y_actu.append(actu_label)
             self.y_pred.append(pred_label)
 
-        plot_confusion_matrix(to_df_confusion(self.y_actu, self.y_pred))
+
+        print(metrics.accuracy_score(self.y_actu, self.y_pred))
+        confusionMatrix =  metrics.confusion_matrix(self.y_actu, self.y_pred)
+
+        print(confusionMatrix)
+
+        ax = sns.heatmap(confusionMatrix, annot=True, cmap='Blues', fmt='g')
+        ax.set_title('Confusion Matrix\n\n')
+        ax.set_xlabel('\nPredicted Values')
+        ax.set_ylabel('Actual Values')
+
+        ## Ticket labels - List must be in alphabetical order
+        ax.xaxis.set_ticklabels(self.distinctLabels)
+        ax.yaxis.set_ticklabels(self.distinctLabels)
+
+        ## Display the visualization of the Confusion Matrix.
+        plt.show()
+
+
 
         # confusionMatrix = {}
         # for label1 in self.distinctLabels:

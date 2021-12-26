@@ -25,8 +25,6 @@ x_train_tfidf = tfidf.fitThenTransform(x_train_data_fake)
 train_data = []
 train_tfidf = []
 for i in range(len(x_train_data)):
-    if y_train_data[i] == "NEU":
-        continue
     train_data.append( (x_train_data[i], y_train_data[i]) )
     train_tfidf.append( (x_train_tfidf[i], y_train_data[i]) )
 

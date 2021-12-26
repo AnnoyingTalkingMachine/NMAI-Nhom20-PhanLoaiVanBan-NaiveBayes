@@ -11,4 +11,4 @@ nbc.loadPickleSelf("after_train.pickle")
 
 start_time = time()
 nbc.test(test_data)
-print('Test: ', time() - start_time)
+print('Test time: ', time() - start_time)

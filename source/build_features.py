@@ -50,6 +50,7 @@ trim_index = int(len(data) * 0.8)
 train_data = data[:trim_index]
 test_data = data[trim_index:]
 
+print(len(train_data), len(test_data))
 print('Chia tập: ', time() - start_time)
 
 # Lưu lại các tập 

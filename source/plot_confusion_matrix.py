@@ -13,7 +13,7 @@ def plot_confusion_matrix(df_confusion, title='Confusion matrix'):
     plt.ylabel(df_confusion.index.name)
     plt.xlabel(df_confusion.columns.name)
 
-    # for i, j in range(len(df_confusion.index)), range(len(df_confusion.index)):
+    
 
     plt.show()
 
