@@ -13,22 +13,12 @@ sns.set_style('darkgrid')
 
 class NaiBay():
     def __init__(self):
+        # Số dòng dữ liệu train
+        self.lines = 0
         # List các từ phân biệt trong tất cả các câu
-        self.distinctWords = []
-        # Tổng số lượng từ (phân biệt)
-        self.countDistinctWords = 0
+        self.distinctWords = {}
         # Tổng số lượng từ (không phân biệt)
-        self.countWords = 0 
-
-        # Ma trận gồm nhiều dòng, mỗi dòng là 1 câu trong tập dữ liệu train
-        # Mỗi cột trên một dòng sẽ là số lần xuất hiện của từ cụ thể trong câu
-        # Thứ tự các từ đại diện các cột trùng thứ tự tring distinctWords 
-        # self.countWordInLine = []
-
-        # Danh sách các nhãn của các dòng (theo ma trận trên)
-        # self.labels = []
-        # Tổng số nhãn (= tổng số dòng dữ liệu)
-        self.countLabels = 0
+        self.countWords = 0
 
         # Key: các nhãn phân biệt
         # Value: số lượng của các nhãn trong tập dữ liệu train
@@ -54,12 +44,9 @@ class NaiBay():
     ###################
     def train(self, train_data):
         print("Train")
+        self.lines = len(train_data)
 
-        for line, label in train_data:
-            # Ghi lại toàn bộ label theo thứ tự xuất hiện trong tập train
-            # self.labels.append(label)
-            self.countLabels += 1
-
+        for _, label in train_data:
             # Ghi lại key: label phân biệt, value: số lần xuất hiện 
             if label in self.distinctLabels:
                 self.distinctLabels[label] += 1
@@ -67,80 +54,70 @@ class NaiBay():
                 self.distinctLabels[label] = 1
                 self.countAllWordByLabel[label] = 0
 
+        for line, _ in train_data:
             # Ghi lại các từ phân biệt
             for word in line:
                 self.countWords += line[word]
-                if word not in self.distinctWords:
-                    self.distinctWords.append(word)
-                    self.countDistinctWords += 1
+                self.distinctWords[word] = True
+                self.countWordByLabel[word] = dict([label, 0] for label in self.distinctLabels)
 
-        # Lập ma trận
+        # Tính toán số lượng từ theo từng label
         for line, label in train_data:
-            # self.countWordInLine.append([0] * self.countDistinctWords)
             for word in line:
-                # idx = self.distinctWords.index(word)
-                # self.countWordInLine[-1][idx] += line[word]
                 self.countAllWordByLabel[label] += line[word]
-                
-                if word in self.countWordByLabel:
-                    if label in self.countWordByLabel[word]:
-                        self.countWordByLabel[word][label] += line[word]
-                    else:
-                        self.countWordByLabel[word][label] = line[word]
-                else:
-                    self.countWordByLabel[word] = {}
-                    self.countWordByLabel[word][label] = line[word]
+                self.countWordByLabel[word][label] += line[word]
 
-        # Tính self.probWordByLabel
+        # Tính P(word | label)
         for word in self.distinctWords:
             self.probWordByLabel[word] = {}
 
             for label in self.countWordByLabel[word]:
                 numerator = self.countWordByLabel[word][label] + 1
-                denominator = self.countAllWordByLabel[label] + self.countDistinctWords
-
+                denominator = self.countAllWordByLabel[label] + len(self.distinctWords)
+                
                 self.probWordByLabel[word][label] = numerator / denominator
+                
+                if self.probWordByLabel[word][label] == 0: 
+                    print("Từ này xác suất = 0:", word, label)
     # end train()
 
 
     ##################
     ##   CLASSIFY   ##
     ##################
-    def classify(self, tokenized_sentence):
-        # print("Classify")
-
+    def classify(self, tokenized_sentence): 
         probLabel = {}
         for label in self.distinctLabels:
             probLabel[label] = 1
 
+        # Nhân P(word | label) và xác suất
         for word in tokenized_sentence:
+            # Nếu từ không xuất hiện trong dữ liệu train -> loại
             if word not in self.probWordByLabel: 
                 continue
             
             for label in self.distinctLabels:
-                if label in self.probWordByLabel[word]:
-                    temp = self.probWordByLabel[word][label] ** tokenized_sentence[word]
-                    probLabel[label] *= temp
-                    # print(word, label, temp)
+                temp = self.probWordByLabel[word][label] ** tokenized_sentence[word]
+                probLabel[label] *= temp
 
         for label in self.distinctLabels:
-            if probLabel[label] == 1:
+            if probLabel[label] == 1 or probLabel[label] == 0:
                 probLabel[label] = 0
+                # print("Câu này xác suất = 0", tokenized_sentence, label)
 
-            temp = self.distinctLabels[label] / self.countLabels # len(self.labels)
+            temp = self.distinctLabels[label] #/ self.lines
             probLabel[label] *= temp
 
-        # print('Label: ', probLabel)
+        # Chọn ra nhãn có xác suất cao nhất
         return max(probLabel, key=probLabel.get)
     # end classify()
 
 
                 
-
     ##################
     ##     TEST     ##
     ##################
-    def test(self, test_data):
+    def test(self, test_data, figureTitle=""):
         print("Test data")
         
         self.y_actu = []
@@ -151,22 +128,25 @@ class NaiBay():
             self.y_actu.append(actu_label)
             self.y_pred.append(pred_label)
 
-
-        print(metrics.accuracy_score(self.y_actu, self.y_pred))
+        print(figureTitle)
+        accuracy = metrics.accuracy_score(self.y_actu, self.y_pred)
         confusionMatrix =  metrics.confusion_matrix(self.y_actu, self.y_pred)
 
-        print(confusionMatrix)
+        print("Accuracy:", accuracy)
+        print("Confusion matrix:\n", confusionMatrix)
 
         ax = sns.heatmap(confusionMatrix, annot=True, cmap='Blues', fmt='g')
-        ax.set_title('Confusion Matrix\n\n')
-        ax.set_xlabel('\nPredicted Values')
-        ax.set_ylabel('Actual Values')
+        ax.set_title(figureTitle + "\nConfusion Matrix\n\n")
+        ax.set_xlabel('Nhãn dự đoán')
+        ax.set_ylabel('Nhãn thực')
 
         ## Ticket labels - List must be in alphabetical order
         ax.xaxis.set_ticklabels(self.distinctLabels)
         ax.yaxis.set_ticklabels(self.distinctLabels)
 
+        ax.text(0.5, 0.01, "Accuracy:" + str(accuracy), ha ='center')
         ## Display the visualization of the Confusion Matrix.
+        
         plt.show()
 
 
@@ -199,14 +179,14 @@ class NaiBay():
 
     def printThings(self):
         print("Print things")
-        print(self.distinctWords)
-        print(self.distinctLabels)
-        # print(self.countWordInLine)
-        print(self.countAllWordByLabel)
-        print(self.countWordByLabel)
+        print(self.lines)
+        # print(self.distinctWords)
+        # print(self.distinctLabels)
+        # print(self.countAllWordByLabel)
+        # print(self.countWordByLabel)
 
-        # print(self.probWordByLabel)
         # probWordByLabel
+        # print(self.probWordByLabel)
         # for word in self.probWordByLabel:
         #     for label in self.probWordByLabel[word]:
         #         print("P(%s | %d) = %.6f" % (word, label, self.probWordByLabel[word][label]))

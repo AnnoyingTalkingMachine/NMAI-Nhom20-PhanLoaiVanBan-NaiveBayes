@@ -10,12 +10,12 @@ from tokenize_clean_data import tokenize_clean_sentence
 nbc_V = NaiBay()
 nbc_V.loadPickleSelf("after_train_TV.pickle")
 nbc_E = NaiBay()
-nbc_E.loadPickleSelf("after_train.pickle")
+nbc_E.loadPickleSelf("after_train_TA.pickle")
 
 nbc_default = nbc_E
-preTrain_filePath_default = '.\\..\\data\\processed\\before_train.pickle'
-test_filePath_default = '.\\..\\data\\processed\\test.pickle'
-aftTrain_fileName_default = "after_train.pickle"
+preTrain_filePath_default = '.\\..\\data\\processed\\before_train_TA.pickle'
+test_filePath_default = '.\\..\\data\\processed\\test_TA.pickle'
+aftTrain_fileName_default = "after_train_TA.pickle"
 tokenize_clean_default = tokenize_clean_sentence
 
 ############
@@ -52,9 +52,9 @@ def on_click_languageV():
     global nbc_default, preTrain_filePath_default, test_filePath_default, \
         aftTrain_fileName_default, tokenize_clean_default
     nbc_default = nbc_E
-    preTrain_filePath_default = '.\\..\\data\\processed\\before_train.pickle'
-    test_filePath_default = '.\\..\\data\\processed\\test.pickle'
-    aftTrain_fileName_default = "after_train.pickle"
+    preTrain_filePath_default = '.\\..\\data\\processed\\before_train_TV.pickle'
+    test_filePath_default = '.\\..\\data\\processed\\test_TV.pickle'
+    aftTrain_fileName_default = "after_train_TV.pickle"
     tokenize_clean_default = tokenize_clean_sentence
 
 radioButton_V = Radiobutton(mainWindow, text="Vietnamese", value="V", indicatoron=0, command=on_click_languageV)
@@ -66,9 +66,9 @@ def on_click_languageE():
     global nbc_default, preTrain_filePath_default, test_filePath_default, \
         aftTrain_fileName_default, tokenize_clean_default
     nbc_default = nbc_E
-    preTrain_filePath_default = '.\\..\\data\\processed\\before_train.pickle'
-    test_filePath_default = '.\\..\\data\\processed\\test.pickle'
-    aftTrain_fileName_default = "after_train.pickle"
+    preTrain_filePath_default = '.\\..\\data\\processed\\before_train_TA.pickle'
+    test_filePath_default = '.\\..\\data\\processed\\test_TA.pickle'
+    aftTrain_fileName_default = "after_train_TA.pickle"
     tokenize_clean_default = tokenize_clean_sentence
 
 radioButton_E = Radiobutton(mainWindow, text="English", value="E", indicatoron=0, command=on_click_languageE)

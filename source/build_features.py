@@ -14,8 +14,8 @@ start_time = time()
 dataFrame_positive = dataFrame[dataFrame["label"] == 4]
 dataFrame_negative = dataFrame[dataFrame["label"] == 0]
 
-dataFrame_positive = dataFrame_positive.iloc[:100000] # :int(len(dataFrame_positive) / 40)
-dataFrame_negative = dataFrame_negative.iloc[:100000] # :int(len(dataFrame_negative) / 40)
+dataFrame_positive = dataFrame_positive.iloc[:200000] # :int(len(dataFrame_positive) / 40)
+dataFrame_negative = dataFrame_negative.iloc[:200000] # :int(len(dataFrame_negative) / 40)
 
 dataFrame = pd.concat([dataFrame_positive, dataFrame_negative])
 
@@ -29,10 +29,16 @@ start_time = time()
 data = []
 for index, df in dataFrame.iterrows():
     try:
+        temp = tokenize_clean_sentence(df["text"])
+        if not temp:
+            print(df["text"], "=> removed")
+            continue
+
         if df["label"] == 4:
-            data.append( (tokenize_clean_sentence(df["text"]), 1) )
+            data.append( (temp, 1) )
         else:
-            data.append( (tokenize_clean_sentence(df["text"]), 0) )
+            data.append( (temp, 0) )
+    
     except:
         print(index)
 
