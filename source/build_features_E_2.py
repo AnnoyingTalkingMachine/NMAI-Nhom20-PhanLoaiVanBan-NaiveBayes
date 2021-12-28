@@ -14,8 +14,8 @@ start_time = time()
 dataFrame_positive = dataFrame[dataFrame["label"] == 4]
 dataFrame_negative = dataFrame[dataFrame["label"] == 0]
 
-dataFrame_positive = dataFrame_positive.iloc[:200000] # :int(len(dataFrame_positive) / 40)
-dataFrame_negative = dataFrame_negative.iloc[:200000] # :int(len(dataFrame_negative) / 40)
+dataFrame_positive = dataFrame_positive.iloc[:100000] # :int(len(dataFrame_positive) / 40)
+dataFrame_negative = dataFrame_negative.iloc[:100000] # :int(len(dataFrame_negative) / 40)
 
 dataFrame = pd.concat([dataFrame_positive, dataFrame_negative])
 
@@ -64,11 +64,11 @@ import pickle
 
 start_time = time()
 
-pickleFile = open('.\\..\\data\\processed\\before_train.pickle', 'wb')
+pickleFile = open('.\\..\\data\\processed\\before_train_E_2.pickle', 'wb')
 pickle.dump(train_data, pickleFile)
 pickleFile.close()
 
-pickleFile = open('.\\..\\data\\processed\\test.pickle', 'wb')
+pickleFile = open('.\\..\\data\\processed\\test_E_2.pickle', 'wb')
 pickle.dump(test_data, pickleFile)
 pickleFile.close()
 

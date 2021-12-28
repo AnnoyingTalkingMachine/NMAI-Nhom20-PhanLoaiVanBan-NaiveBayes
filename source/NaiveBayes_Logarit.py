@@ -147,7 +147,7 @@ class NaiBay_L():
         # ax.text(10, 20, "Accuracy:" + str(accuracy), ha ='center')
         # plt.show()
 
-        return (confusionMatrix, figureTitle + "\nAccuracy = " + str(accuracy))
+        return (confusionMatrix, figureTitle + "\nAccuracy = " + str(accuracy), labels)
         
     # end test()
 

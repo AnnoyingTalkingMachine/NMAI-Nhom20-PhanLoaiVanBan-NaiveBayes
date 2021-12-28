@@ -8,14 +8,14 @@ from NaiveBayes import NaiBay
 from tokenize_clean_data import tokenize_clean_sentence
 
 nbc_V = NaiBay()
-nbc_V.loadPickleSelf("after_train_TV.pickle")
+nbc_V.loadPickleSelf("after_train_V_3.pickle")
 nbc_E = NaiBay()
-nbc_E.loadPickleSelf("after_train_TA.pickle")
+nbc_E.loadPickleSelf("after_train_E_3.pickle")
 
 nbc_default = nbc_E
-preTrain_filePath_default = '.\\..\\data\\processed\\before_train_TA.pickle'
-test_filePath_default = '.\\..\\data\\processed\\test_TA.pickle'
-aftTrain_fileName_default = "after_train_TA.pickle"
+preTrain_filePath_default = '.\\..\\data\\processed\\before_train_E_3.pickle'
+test_filePath_default = '.\\..\\data\\processed\\test_E_3.pickle'
+aftTrain_fileName_default = "after_train_E_3.pickle"
 tokenize_clean_default = tokenize_clean_sentence
 
 ############
@@ -23,7 +23,7 @@ tokenize_clean_default = tokenize_clean_sentence
 ############
 mainWindow = Tk()
 mainWindow.title("Sentiment Classifier - Nhom 20 - Nhap mon AI")
-mainWindow.geometry("500x400")
+mainWindow.geometry("500x500")
 
 ###########
 ## LABEL ##
@@ -52,9 +52,9 @@ def on_click_languageV():
     global nbc_default, preTrain_filePath_default, test_filePath_default, \
         aftTrain_fileName_default, tokenize_clean_default
     nbc_default = nbc_E
-    preTrain_filePath_default = '.\\..\\data\\processed\\before_train_TV.pickle'
-    test_filePath_default = '.\\..\\data\\processed\\test_TV.pickle'
-    aftTrain_fileName_default = "after_train_TV.pickle"
+    preTrain_filePath_default = '.\\..\\data\\processed\\before_train_V_3.pickle'
+    test_filePath_default = '.\\..\\data\\processed\\test_V_3.pickle'
+    aftTrain_fileName_default = "after_train_V_3.pickle"
     tokenize_clean_default = tokenize_clean_sentence
 
 radioButton_V = Radiobutton(mainWindow, text="Vietnamese", value="V", indicatoron=0, command=on_click_languageV)
@@ -66,9 +66,9 @@ def on_click_languageE():
     global nbc_default, preTrain_filePath_default, test_filePath_default, \
         aftTrain_fileName_default, tokenize_clean_default
     nbc_default = nbc_E
-    preTrain_filePath_default = '.\\..\\data\\processed\\before_train_TA.pickle'
-    test_filePath_default = '.\\..\\data\\processed\\test_TA.pickle'
-    aftTrain_fileName_default = "after_train_TA.pickle"
+    preTrain_filePath_default = '.\\..\\data\\processed\\before_train_E_3.pickle'
+    test_filePath_default = '.\\..\\data\\processed\\test_E_3.pickle'
+    aftTrain_fileName_default = "after_train_E_3.pickle"
     tokenize_clean_default = tokenize_clean_sentence
 
 radioButton_E = Radiobutton(mainWindow, text="English", value="E", indicatoron=0, command=on_click_languageE)
@@ -105,7 +105,7 @@ def on_click_train():
     result.config(text="Trained!")
 
 button_train = Button(mainWindow, text="Train",command=lambda:on_click_train())
-button_train.place(x=30, y=350, width=220)
+button_train.place(x=30, y=450, width=220)
 button_train.config(background="orange", font=("Courier", 15))
 
 def on_click_test():
@@ -118,7 +118,7 @@ def on_click_test():
     result.config(text="Tested!")
 
 button_test = Button(mainWindow, text="Test",command=on_click_test)
-button_test.place(x=250, y=350, width=220)
+button_test.place(x=250, y=450, width=220)
 button_test.config(background="orange", font=("Courier", 15))
 
 mainWindow.mainloop()

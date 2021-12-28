@@ -2,11 +2,11 @@
 import pickle
 from time import time
 
-pickleFile = open('.\\..\\data\\processed\\before_train.pickle', 'rb')
+pickleFile = open('.\\..\\data\\processed\\before_train_E_2.pickle', 'rb')
 train_data = pickle.load(pickleFile)
 pickleFile.close()
 
-pickleFile = open('.\\..\\data\\processed\\before_train.pickle', 'rb')
+pickleFile = open('.\\..\\data\\processed\\before_train_E_2.pickle', 'rb')
 train_tfidf = pickle.load(pickleFile)
 pickleFile.close()
 
@@ -22,13 +22,13 @@ start_time = time()
 nbc.train(train_data)
 print('Train time: ', time() - start_time)
 
-nbc.dumpPickleSelf("after_train.pickle")
+nbc.dumpPickleSelf("after_train_E_2.pickle")
 
 nbc = NaiBay_L()
 start_time = time()
 nbc.train(train_tfidf)
 print('Train time: ', time() - start_time)
 
-nbc.dumpPickleSelf("after_train_tfidf.pickle")
+nbc.dumpPickleSelf("after_train_tfidf_E_2.pickle")
 
 

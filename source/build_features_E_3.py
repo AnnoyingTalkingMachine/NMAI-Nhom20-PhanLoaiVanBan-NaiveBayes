@@ -8,11 +8,6 @@ import pickle
 dataFrame_raw = pd.read_csv("..\\data\\raw\\text_emotion.csv", encoding="ISO-8859-1", header=None)
 dataFrame_raw.columns = ["tweet_id", "sentiment", "author", "content"]
 
-data = {}
-for idx, df in dataFrame_raw.iterrows():
-    data[df["sentiment"]] = 1
-
-print(data)
 dataFrame = dataFrame_raw[["sentiment", "content"]]
 
 data_positive = []
@@ -35,7 +30,11 @@ for idx, df in dataFrame.iterrows():
     except:
         print(idx)
 
-print(len(data_positive), len(data_neutral), len(data_negative))
+min_len = min(len(data_positive), len(data_neutral), len(data_negative))
+data_positive = data_positive[:min_len]
+data_neutral = data_neutral[:min_len]
+data_negative = data_negative[:min_len]
+
 data = data_positive + data_neutral + data_negative
 print(len(data))
 
@@ -49,10 +48,10 @@ test_data = data[trim_index:]
 
 print(len(train_data), len(test_data))
 
-pickleFile = open('.\\..\\data\\processed\\before_train_new_E.pickle', 'wb')
+pickleFile = open('.\\..\\data\\processed\\before_train_E_3.pickle', 'wb')
 pickle.dump(train_data, pickleFile)
 pickleFile.close()
 
-pickleFile = open('.\\..\\data\\processed\\test_new_E.pickle', 'wb')
+pickleFile = open('.\\..\\data\\processed\\test_E_3.pickle', 'wb')
 pickle.dump(test_data, pickleFile)
 pickleFile.close()

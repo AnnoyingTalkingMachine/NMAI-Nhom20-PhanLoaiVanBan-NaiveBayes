@@ -5,16 +5,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load dữ liệu
-with open('.\\..\\data\\processed\\test_V_3.pickle', 'rb') as test:
+with open('.\\..\\data\\processed\\test_E_3.pickle', 'rb') as test:
     test_data = pickle.load(test)
 
-with open('.\\..\\data\\processed\\test_V_3.pickle', 'rb') as test:
+with open('.\\..\\data\\processed\\test_E_3.pickle', 'rb') as test:
     test_tfidf = pickle.load(test)
 
-with open('.\\..\\data\\processed\\before_train_V_3.pickle', 'rb') as train:
+with open('.\\..\\data\\processed\\before_train_E_3.pickle', 'rb') as train:
     pretrain_data = pickle.load(train)
     
-with open('.\\..\\data\\processed\\before_train_V_3.pickle', 'rb') as train:
+with open('.\\..\\data\\processed\\before_train_E_3.pickle', 'rb') as train:
     pretrain_tfidf = pickle.load(train)
 
 tfidfAtHome()
@@ -27,7 +27,7 @@ testResults = []
 # Test các data sử dụng đếm
 from NaiveBayes_Logarit import NaiBay_L
 nbc = NaiBay_L()
-nbc.loadPickleSelf('after_train_V_3.pickle')
+nbc.loadPickleSelf('after_train_E_3.pickle')
 
 print("Sử dụng đếm:")
 testResults.append(nbc.test(pretrain_data, "Dữ liệu train sử dụng đếm"))
@@ -35,7 +35,7 @@ testResults.append(nbc.test(test_data, "Dữ liệu test sử dụng đếm"))
 
 # Test các data sử dụng TF-IDF
 nbc = NaiBay_L()
-nbc.loadPickleSelf('after_train_tfidf_V_3.pickle')
+nbc.loadPickleSelf('after_train_tfidf_E_3.pickle')
 
 print("Sử dụng TF-IDF:")
 testResults.append(nbc.test(pretrain_tfidf, "Dữ liệu train sử dụng TF-IDF"))
