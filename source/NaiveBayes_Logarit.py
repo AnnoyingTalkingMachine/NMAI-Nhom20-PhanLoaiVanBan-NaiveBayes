@@ -136,17 +136,18 @@ class NaiBay_L():
         print("Accuracy:", accuracy)
         print("Confusion matrix:\n", confusionMatrix)
 
-        ax = sns.heatmap(confusionMatrix, annot=True, cmap='Blues', fmt='g', center=0)
-        ax.set_title(figureTitle + "\nAccuracy = " + str(accuracy))
-        ax.set_xlabel('Nhãn dự đoán')
-        ax.set_ylabel('Nhãn thực')
+        # ax = sns.heatmap(confusionMatrix, annot=True, cmap='Blues', fmt='g')
+        # ax.set_title(figureTitle + "\nConfusion Matrix\n\n")
+        # ax.set_xlabel('Nhãn dự đoán')
+        # ax.set_ylabel('Nhãn thực')
 
-        ## Ticket labels - List must be in alphabetical order
-        ax.xaxis.set_ticklabels(labels)
-        ax.yaxis.set_ticklabels(labels)
+        # ax.xaxis.set_ticklabels(labels)
+        # ax.yaxis.set_ticklabels(labels)
 
-        # Display the visualization of the Confusion Matrix.
-        plt.show()
+        # ax.text(10, 20, "Accuracy:" + str(accuracy), ha ='center')
+        # plt.show()
+
+        return (confusionMatrix, figureTitle + "\nAccuracy = " + str(accuracy))
         
     # end test()
 
@@ -159,7 +160,6 @@ class NaiBay_L():
         # print(self.countAllWordByLabel)
         # print(self.countWordByLabel)
 
-        # probWordByLabel
         # print(self.probWordByLabel)
         # for word in self.probWordByLabel:
         #     for label in self.probWordByLabel[word]:

@@ -103,7 +103,7 @@ class NaiBay():
         for label in self.distinctLabels:
             if probLabel[label] == 1 or probLabel[label] == 0:
                 probLabel[label] = 0
-                # print("Câu này xác suất = 0", tokenized_sentence, label)
+                print("Câu này xác suất = 0", tokenized_sentence, label)
 
             temp = self.distinctLabels[label] #/ self.lines
             probLabel[label] *= temp
@@ -125,61 +125,44 @@ class NaiBay():
 
         for tokenized_sentence, actu_label in test_data:
             pred_label = self.classify(tokenized_sentence)
+            
             self.y_actu.append(actu_label)
             self.y_pred.append(pred_label)
 
         print(figureTitle)
         accuracy = metrics.accuracy_score(self.y_actu, self.y_pred)
-        confusionMatrix =  metrics.confusion_matrix(self.y_actu, self.y_pred)
+        
+        if len(self.distinctLabels) == 3:
+            labels = ["POS", "NEU", "NEG"]
+        elif len(self.distinctLabels) == 2:
+            labels = [0, 1]
+        else:
+            labels = self.distinctLabels
+
+        confusionMatrix =  metrics.confusion_matrix(self.y_actu, self.y_pred, labels=labels)
 
         print("Accuracy:", accuracy)
         print("Confusion matrix:\n", confusionMatrix)
 
-        ax = sns.heatmap(confusionMatrix, annot=True, cmap='Blues', fmt='g')
-        ax.set_title(figureTitle + "\nConfusion Matrix\n\n")
-        ax.set_xlabel('Nhãn dự đoán')
-        ax.set_ylabel('Nhãn thực')
+        # ax = sns.heatmap(confusionMatrix, annot=True, cmap='Blues', fmt='g')
+        # ax.set_title(figureTitle + "\nConfusion Matrix\n\n")
+        # ax.set_xlabel('Nhãn dự đoán')
+        # ax.set_ylabel('Nhãn thực')
 
-        ## Ticket labels - List must be in alphabetical order
-        ax.xaxis.set_ticklabels(self.distinctLabels)
-        ax.yaxis.set_ticklabels(self.distinctLabels)
+        # ax.xaxis.set_ticklabels(labels)
+        # ax.yaxis.set_ticklabels(labels)
 
-        ax.text(0.5, 0.01, "Accuracy:" + str(accuracy), ha ='center')
-        ## Display the visualization of the Confusion Matrix.
+        # ax.text(10, 20, "Accuracy:" + str(accuracy), ha ='center')
+        # plt.show()
+
+        return (confusionMatrix, figureTitle + "\nAccuracy = " + str(accuracy))
         
-        plt.show()
-
-
-
-        # confusionMatrix = {}
-        # for label1 in self.distinctLabels:
-        #     confusionMatrix[label1] = {}
-        #     for label2 in self.distinctLabels:
-        #         confusionMatrix[label1][label2] = 0
-        
-        # for tokenized_sentence, actu_label in test_data:
-        #     pred_label = self.classify(tokenized_sentence)
-        #     confusionMatrix[actu_label][pred_label] += 1
-
-        # correct_pred = 0
-        # incorrect_pred = 0
-        # for label1 in confusionMatrix:
-        #     for label2 in confusionMatrix[label1]:
-        #         if label1 == label2:
-        #             correct_pred += confusionMatrix[label1][label2]
-        #         else:
-        #             incorrect_pred += confusionMatrix[label1][label2]
-        # print("Accuracy: %f" % ( correct_pred / (correct_pred + incorrect_pred) ) )
-        
-        # print(confusionMatrix)
-
-        #SKLEARN    
     # end test()
 
 
     def printThings(self):
         print("Print things")
-        print(self.lines)
+        # print(self.lines)
         # print(self.distinctWords)
         # print(self.distinctLabels)
         # print(self.countAllWordByLabel)
