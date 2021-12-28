@@ -84,8 +84,8 @@ def list_to_dict_tokens(cleaned_tokens):
         return newDict
 
 # Token hoá và làm sạch câu
-from nltk.tokenize import TweetTokenizer
+from nltk import word_tokenize
 
 def tokenize_clean_sentence(sentence):
-    tokens = TweetTokenizer(reduce_len=True).tokenize(sentence)
+    tokens = word_tokenize(sentence)
     return list_to_dict_tokens(clean_tokens(tokens))
