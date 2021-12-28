@@ -14,7 +14,7 @@ data_positive = []
 data_negative = []
 data_neutral = []
 
-from tokenize_clean_data import tokenize_clean_sentence
+from tokenize_clean_data_E import tokenize_clean_sentence
 for idx, df in dataFrame.iterrows():
     try:
         temp = tokenize_clean_sentence(df["content"])

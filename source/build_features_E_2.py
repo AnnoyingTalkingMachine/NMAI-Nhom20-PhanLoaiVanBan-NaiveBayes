@@ -22,7 +22,7 @@ dataFrame = pd.concat([dataFrame_positive, dataFrame_negative])
 print('Cắt dữ liệu: ', time() - start_time)
 
 # [ (text, label) ] -> [ ( {token: số lần lặp}, label ) ]
-from tokenize_clean_data import tokenize_clean_sentence
+from tokenize_clean_data_E import tokenize_clean_sentence
 
 start_time = time()
 
