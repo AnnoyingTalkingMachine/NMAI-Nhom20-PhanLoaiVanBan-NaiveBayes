@@ -2,12 +2,13 @@
 import pandas as pd
 from time import time
 import random
+from tfidfAtHome import tfidfAtHome
 
 dataFrame_raw = pd.read_csv("..\\data\\raw\\dataset.csv", encoding="ISO-8859-1", header=None)
 dataFrame_raw.columns = ["label", "time", "date", "query", "username", "text"]
 
 dataFrame = dataFrame_raw[["label", "text"]]
-dataFrame = dataFrame.sample(frac=1)
+# dataFrame = dataFrame.sample(frac=1)
 # Cắt nhỏ kích thước dữ liệu
 start_time = time()
 
@@ -70,6 +71,18 @@ pickleFile.close()
 
 pickleFile = open('.\\..\\data\\processed\\test_E_2.pickle', 'wb')
 pickle.dump(test_data, pickleFile)
+pickleFile.close()
+
+tfidf = tfidfAtHome()
+train_tfidf = tfidf.fitThenTransform(train_data)
+test_tfidf = tfidf.transform(test_data)
+
+pickleFile = open('.\\..\\data\\processed\\before_train_E_2_tfidf.pickle', 'wb')
+pickle.dump(train_tfidf, pickleFile)
+pickleFile.close()
+
+pickleFile = open('.\\..\\data\\processed\\test_E_2_tfidf.pickle', 'wb')
+pickle.dump(test_tfidf, pickleFile)
 pickleFile.close()
 
 print('Lưu dữ liệu: :', time() - start_time)

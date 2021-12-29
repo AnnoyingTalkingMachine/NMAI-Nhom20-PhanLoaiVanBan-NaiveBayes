@@ -67,7 +67,7 @@ def clean_tokens(tweet_tokens):
             # Chuẩn hóa từ
             token = lemmatize_token(token)
 
-            if token not in string.punctuation and token not in STOP_WORDS:
+            if token not in string.punctuation:# and token not in STOP_WORDS:
                 cleaned_tokens.append(token)
 
     return cleaned_tokens
@@ -84,8 +84,8 @@ def list_to_dict_tokens(cleaned_tokens):
         return newDict
 
 # Token hoá và làm sạch câu
-from nltk import word_tokenize
+from nltk.tokenize import TweetTokenizer
 
 def tokenize_clean_sentence(sentence):
-    tokens = word_tokenize(sentence)
+    tokens = TweetTokenizer(reduce_len=True).tokenize(sentence)
     return list_to_dict_tokens(clean_tokens(tokens))

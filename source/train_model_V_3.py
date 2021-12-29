@@ -6,13 +6,10 @@ pickleFile = open('.\\..\\data\\processed\\before_train_V_3.pickle', 'rb')
 train_data = pickle.load(pickleFile)
 pickleFile.close()
 
-pickleFile = open('.\\..\\data\\processed\\before_train_V_3.pickle', 'rb')
+pickleFile = open('.\\..\\data\\processed\\before_train_V_3_tfidf.pickle', 'rb')
 train_tfidf = pickle.load(pickleFile)
 pickleFile.close()
 
-from tfidfAtHome import tfidfAtHome
-tfidf = tfidfAtHome()
-train_tfidf = tfidf.fitThenTransform(train_tfidf)
 
 # Train
 from NaiveBayes_Logarit import NaiBay_L

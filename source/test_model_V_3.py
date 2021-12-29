@@ -1,6 +1,5 @@
 # Đọc tập train
 import pickle
-from tfidfAtHome import tfidfAtHome
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -8,19 +7,14 @@ import seaborn as sns
 with open('.\\..\\data\\processed\\test_V_3.pickle', 'rb') as test:
     test_data = pickle.load(test)
 
-with open('.\\..\\data\\processed\\test_V_3.pickle', 'rb') as test:
+with open('.\\..\\data\\processed\\test_V_3_tfidf.pickle', 'rb') as test:
     test_tfidf = pickle.load(test)
 
 with open('.\\..\\data\\processed\\before_train_V_3.pickle', 'rb') as train:
     pretrain_data = pickle.load(train)
     
-with open('.\\..\\data\\processed\\before_train_V_3.pickle', 'rb') as train:
+with open('.\\..\\data\\processed\\before_train_V_3_tfidf.pickle', 'rb') as train:
     pretrain_tfidf = pickle.load(train)
-
-tfidfAtHome()
-tfidf = tfidfAtHome()
-test_tfidf = tfidf.transform(test_data)
-pretrain_tfidf = tfidf.transform(pretrain_data)
 
 
 testResults = []

@@ -4,6 +4,7 @@
 import pandas as pd
 import random
 import pickle
+from tfidfAtHome import tfidfAtHome
 
 dataFrame = pd.read_csv("..\\data\\raw\\dataTV.csv", encoding="ISO-8859-1", header=None)
 dataFrame.columns = ["comment", "rate"]
@@ -53,4 +54,17 @@ pickleFile.close()
 
 pickleFile = open('.\\..\\data\\processed\\test_V_3.pickle', 'wb')
 pickle.dump(test_data, pickleFile)
+pickleFile.close()
+
+
+tfidf = tfidfAtHome()
+train_tfidf = tfidf.fitThenTransform(train_data)
+test_tfidf = tfidf.transform(test_data)
+
+pickleFile = open('.\\..\\data\\processed\\before_train_V_3_tfidf.pickle', 'wb')
+pickle.dump(train_tfidf, pickleFile)
+pickleFile.close()
+
+pickleFile = open('.\\..\\data\\processed\\test_V_3_tfidf.pickle', 'wb')
+pickle.dump(test_tfidf, pickleFile)
 pickleFile.close()

@@ -11,9 +11,11 @@ class tfidfAtHome():
     # reset() mới là hàm init thật sự (Cảm ơn StackOverflow)
     def __init__(self):
         self.reset()
+    
     def reset(self):
         # Từ điển
         self.corpus = set()
+        self.docCount = 0
 
 
     # Tạo một từ điển mới dựa theo tập trainData
@@ -32,6 +34,7 @@ class tfidfAtHome():
         #Xóa từ điển cũ
         self.reset()
 
+        self.docCount = len(trainData)
         for tokens, label in trainData:
             tempList = []
             for key in tokens:
@@ -85,14 +88,14 @@ class tfidfAtHome():
         
         # Tính IDF trên từng từ trong từ điển
         idf = dict.fromkeys(self.corpus, 1)
-        docCount = len(targetData)
+
         for tokens, label in targetData:   
             for key in tokens:
                 if key in self.corpus:
                     idf[key] += 1
         
         for key in idf:
-            idf[key] = math.log10(docCount/idf[key])
+            idf[key] = math.log10(self.docCount/idf[key])
             # idf[key] = (idf[key]/docCount)
 
         #Tính TFIDF cho từng văn bản
