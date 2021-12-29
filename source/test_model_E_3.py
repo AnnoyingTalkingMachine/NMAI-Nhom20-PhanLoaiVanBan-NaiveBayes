@@ -42,7 +42,7 @@ testResults.append(nbc.test(pretrain_tfidf, "Dữ liệu train sử dụng TF-ID
 testResults.append(nbc.test(test_tfidf, "Dữ liệu test sử dụng TF-IDF"))
 
 # Visualize
-fig, axes = plt.subplots(2, 2, figsize=(15,15))
+fig, axes = plt.subplots(2, 2, figsize=(10,6))
 
 sns.heatmap(testResults[0][0], annot=True, cmap='Blues', fmt='g', ax=axes[0, 0])
 axes[0, 0].set_title(testResults[0][1])
@@ -59,4 +59,5 @@ for ax in axes.flat:
     ax.set(xlabel='Nhãn dự đoán', ylabel='Nhãn thực')
     ax.set(xticklabels=testResults[0][2], yticklabels=testResults[0][2])
 
+plt.savefig("output\\E_3.png")
 plt.show()

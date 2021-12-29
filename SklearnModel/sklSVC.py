@@ -41,18 +41,19 @@ test_accuracy = metrics.accuracy_score(testY, pred_testY)
 train_confusionMatrix = metrics.confusion_matrix(trainY, pred_trainY, labels=labels)
 test_confusionMatrix = metrics.confusion_matrix(testY, pred_testY, labels=labels)
 
-fig, axes = plt.subplots(1, 2, figsize=(15,15), sharex=True, sharey=True)
+fig, axes = plt.subplots(1, 2, figsize=(14,9), sharex=True, sharey=True)
 
-sns.heatmap(train_confusionMatrix, annot=True, cmap='Blues', fmt='g', ax=axes[0])
-axes[0].set_title("Multinomial Naive Bayes, dữ liệu train\nAccracy: " + str(train_accuracy))
-sns.heatmap(test_confusionMatrix, annot=True, cmap='Reds', fmt='g', ax=axes[1])
-axes[1].set_title("Multinomial Naive Bayes, dữ liệu test\nAccracy: " + str(test_accuracy))
+sns.heatmap(train_confusionMatrix, annot=True, cmap='Oranges', fmt='g', ax=axes[0])
+axes[0].set_title("Support Vector Classifier, dữ liệu Train\nAccuracy: " + str(train_accuracy))
+sns.heatmap(test_confusionMatrix, annot=True, cmap='Oranges', fmt='g', ax=axes[1])
+axes[1].set_title("Support Vector Classifier, dữ liệu Test\nAccuracy: " + str(test_accuracy))
 
 plt.subplots_adjust(wspace=0.5, hspace=0.5)
 for ax in axes.flat:
     ax.set(xlabel='Nhãn dự đoán', ylabel='Nhãn thực')
     ax.set(xticklabels=labels, yticklabels=labels)
 
+plt.savefig("output\\SVC.png")
 plt.show()
 
 
