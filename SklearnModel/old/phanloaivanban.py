@@ -2,7 +2,7 @@ import os
 import pickle
 
 # Đọc data của Nam
-os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../data/VN'))
+os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../data/VN'))
 dataDir = os.getcwd()
 
 # X là tập dữ liệu, Y là tập nhãn ứng với tập dữ liệu

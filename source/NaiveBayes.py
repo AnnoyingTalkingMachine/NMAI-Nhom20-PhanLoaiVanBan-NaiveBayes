@@ -1,13 +1,5 @@
 import pickle
-
-from sklearn.metrics import ConfusionMatrixDisplay
-from sklearn.datasets import load_breast_cancer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
 from sklearn import metrics
-import pandas as pd
-import numpy as np
-from matplotlib import pyplot as plt
 import seaborn as sns
 sns.set_style('darkgrid') 
 
@@ -17,8 +9,6 @@ class NaiBay():
         self.lines = 0
         # List các từ phân biệt trong tất cả các câu
         self.distinctWords = {}
-        # Tổng số lượng từ (không phân biệt)
-        self.countWords = 0
 
         # Key: các nhãn phân biệt
         # Value: số lượng của các nhãn trong tập dữ liệu train
@@ -57,7 +47,6 @@ class NaiBay():
         for line, _ in train_data:
             # Ghi lại các từ phân biệt
             for word in line:
-                self.countWords += line[word]
                 self.distinctWords[word] = True
                 self.countWordByLabel[word] = dict([label, 0] for label in self.distinctLabels)
 
@@ -105,7 +94,7 @@ class NaiBay():
                 probLabel[label] = 0
                 print("Câu này xác suất = 0", tokenized_sentence, label)
 
-            temp = self.distinctLabels[label] #/ self.lines
+            temp = self.distinctLabels[label] / self.lines
             probLabel[label] *= temp
 
         # Chọn ra nhãn có xác suất cao nhất

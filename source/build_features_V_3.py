@@ -1,44 +1,56 @@
-# Chạy cái này chỉ để gộp mấy file của Nam lại
+# Data dataTV.csv của Nam
 
-import pickle
+# Đọc dữ liệu raw
 import pandas as pd
-from tfidfAtHome import tfidfAtHome
+import random
+import pickle
 
-pickleFile = open('.\\..\\data\\VN\\x_test.pkl', 'rb')
-x_test_data = pickle.load(pickleFile)
-pickleFile.close()
+dataFrame = pd.read_csv("..\\data\\raw\\dataTV.csv", encoding="ISO-8859-1", header=None)
+dataFrame.columns = ["comment", "rate"]
+# dataFrame = dataFrame.sample(frac=1)
 
-pickleFile = open('.\\..\\data\\VN\\y_test.pkl', 'rb')
-y_test_data = pickle.load(pickleFile)
-pickleFile.close()
+data_positive = []
+data_negative = []
+data_neutral = []
 
-test_data = []
-x_test_data = x_test_data.to_list()
-y_test_data = y_test_data.to_list()
+from tokenize_clean_data_V import text_preprocess
+for idx, df in dataFrame.iterrows():
+    try:
+        temp = text_preprocess(df["comment"])
+        if temp == {}:
+            continue
 
-for i in range(len(x_test_data)):
-    test_data.append( (x_test_data[i], y_test_data[i]) )
+        if df["rate"] > 3:
+            data_positive.append( (temp, "POS") )
+        elif df["rate"] < 3:
+            data_negative.append( (temp, "NEG") )
+        elif df["rate"] == 3:
+            data_neutral.append( (temp, "NEU") )
+    except:
+        print(idx)
 
-pickleFile = open('.\\..\\data\\processed\\test_V_3.pickle', 'wb')
-pickle.dump(test_data, pickleFile)
-pickleFile.close()
+min_len = min(len(data_positive), len(data_neutral), len(data_negative))
+data_positive = data_positive[:min_len]
+data_neutral = data_neutral[:min_len]
+data_negative = data_negative[:min_len]
 
+data = data_positive + data_neutral + data_negative
+print(len(data))
 
-pickleFile = open('.\\..\\data\\VN\\x_train.pkl', 'rb')
-x_train_data = pickle.load(pickleFile)
-pickleFile.close()
+random.shuffle(data)
+print(data[:10])
 
-pickleFile = open('.\\..\\data\\VN\\y_train.pkl', 'rb')
-y_train_data = pickle.load(pickleFile)
-pickleFile.close()
+trim_index = int(len(data) * 0.8)
 
-train_data = []
-x_train_data = x_train_data.to_list()
-y_train_data = y_train_data.to_list()
+train_data = data[:trim_index]
+test_data = data[trim_index:]
 
-for i in range(len(x_train_data)):
-    train_data.append( (x_train_data[i], y_train_data[i]) )
+print(len(train_data), len(test_data))
 
 pickleFile = open('.\\..\\data\\processed\\before_train_V_3.pickle', 'wb')
 pickle.dump(train_data, pickleFile)
+pickleFile.close()
+
+pickleFile = open('.\\..\\data\\processed\\test_V_3.pickle', 'wb')
+pickle.dump(test_data, pickleFile)
 pickleFile.close()

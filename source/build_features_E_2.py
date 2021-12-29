@@ -7,7 +7,7 @@ dataFrame_raw = pd.read_csv("..\\data\\raw\\dataset.csv", encoding="ISO-8859-1",
 dataFrame_raw.columns = ["label", "time", "date", "query", "username", "text"]
 
 dataFrame = dataFrame_raw[["label", "text"]]
-
+dataFrame = dataFrame.sample(frac=1)
 # Cắt nhỏ kích thước dữ liệu
 start_time = time()
 

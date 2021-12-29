@@ -66,7 +66,7 @@ def on_click_languageV():
     aftTrain_fileName_default = "after_train_V_3.pickle"
     tokenize_clean_default = text_preprocess
 
-radioButton_V = Radiobutton(mainWindow, text="Vietnamese", value="V", indicatoron=0, command=on_click_languageV)
+radioButton_V = Radiobutton(mainWindow, text="Vietnamese", value="V", indicatoron=0, command=on_click_languageV, relief=SUNKEN)
 radioButton_V.config(background="light blue", font=("Courier", 15))
 radioButton_V.place(x=30, y=150, width=220, height=30)
 

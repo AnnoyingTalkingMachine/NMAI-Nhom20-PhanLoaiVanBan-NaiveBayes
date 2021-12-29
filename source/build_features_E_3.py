@@ -9,6 +9,7 @@ dataFrame_raw = pd.read_csv("..\\data\\raw\\text_emotion.csv", encoding="ISO-885
 dataFrame_raw.columns = ["tweet_id", "sentiment", "author", "content"]
 
 dataFrame = dataFrame_raw[["sentiment", "content"]]
+dataFrame = dataFrame.sample(frac=1)
 
 data_positive = []
 data_negative = []
